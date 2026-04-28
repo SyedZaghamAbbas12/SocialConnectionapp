@@ -16,12 +16,15 @@ import GlassCard from '../../components/GlassCard';
 
 export default function SignupScreen({ navigation }) {
 
-  // ✅ STATES ADDED
+  // ✅ STATES
   const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  // ✅ SIGNUP FUNCTION ADDED
+  // ✅ NEW STATE FOR EYE TOGGLE
+  const [showPassword, setShowPassword] = useState(false);
+
+  // ✅ SIGNUP FUNCTION
   const handleSignup = async () => {
     if (!fullName || !email || !password) {
       alert("Please fill all fields");
@@ -79,8 +82,8 @@ export default function SignupScreen({ navigation }) {
                 style={styles.input} 
                 placeholder="Enter your full name" 
                 placeholderTextColor="#64748b"
-                value={fullName}                 // ✅ ADDED
-                onChangeText={setFullName}       // ✅ ADDED
+                value={fullName}
+                onChangeText={setFullName}
               />
 
               <Text style={styles.label}>EMAIL</Text>
@@ -90,26 +93,33 @@ export default function SignupScreen({ navigation }) {
                 placeholderTextColor="#64748b" 
                 keyboardType="email-address"
                 autoCapitalize="none"
-                value={email}                   // ✅ ADDED
-                onChangeText={setEmail}         // ✅ ADDED
+                value={email}
+                onChangeText={setEmail}
               />
               
               <Text style={styles.label}>PASSWORD</Text>
               <View style={styles.passwordWrapper}>
                 <TextInput 
                   style={styles.passwordInput} 
-                  secureTextEntry 
+                  secureTextEntry={!showPassword}
                   placeholder="••••••••" 
                   placeholderTextColor="#64748b"
-                  value={password}              // ✅ ADDED
-                  onChangeText={setPassword}    // ✅ ADDED
+                  value={password}
+                  onChangeText={setPassword}
                 />
-                <Ionicons name="eye-outline" size={20} color="#64748b" />
+
+                <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
+                  <Ionicons 
+                    name={showPassword ? "eye-off-outline" : "eye-outline"} 
+                    size={20} 
+                    color="#64748b" 
+                  />
+                </TouchableOpacity>
               </View>
 
               <TouchableOpacity 
                 style={styles.signupBtn} 
-                onPress={handleSignup}   // ✅ UPDATED
+                onPress={handleSignup}
               >
                 <Text style={styles.signupBtnText}>SIGN UP</Text>
               </TouchableOpacity>

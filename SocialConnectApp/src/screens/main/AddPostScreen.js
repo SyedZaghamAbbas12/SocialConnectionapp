@@ -18,7 +18,28 @@ import * as ImagePicker from 'expo-image-picker';
 export default function AddPostScreen({ navigation }) {
   const [image, setImage] = useState(null);
   const [description, setDescription] = useState("");
+const createPost = async () => {
+  const token = await AsyncStorage.getItem("token");
 
+  const formData = new FormData();
+
+  formData.append("image", {
+    uri: image,
+    name: "post.jpg",
+    type: "image/jpeg"
+  });
+
+  await fetch("http://192.168.100.18:5000/api/posts/create", {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "multipart/form-data"
+    },
+    body: formData
+  });
+
+  alert("Post Added ✅");
+};
   // ✅ Pick Image
   const pickImage = async () => {
     Alert.alert(
